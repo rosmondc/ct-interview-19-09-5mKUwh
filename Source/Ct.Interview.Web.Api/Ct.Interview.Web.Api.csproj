@@ -12,8 +12,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="IAsxListedCompaniesService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Ct.Interview.Repository\Ct.Interview.Repository.csproj" />
   </ItemGroup>
 
 </Project>

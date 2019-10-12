@@ -1,4 +1,4 @@
-﻿namespace Ct.Interview.Web.Api
+﻿namespace Ct.Interview.Web.Api.ViewModels
 {
     public class AsxListedCompanyResponse
     {
