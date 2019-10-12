@@ -1,4 +1,7 @@
-﻿namespace Ct.Interview.Data.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Ct.Interview.Web.Api.Models
 {
     public partial class AsxListedCompany
     {

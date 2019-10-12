@@ -13,6 +13,9 @@ namespace Ct.Interview.Repository
         private readonly CtInterviewDBContext _context;
         private readonly DbSet<T> _dbSet;
 
+        /// <summary>  
+        /// Initializes a new instance of the <see cref="GenericRepository{TEntity}"/> class.                  
+        /// </summary>  
         public GenericRepository(CtInterviewDBContext context)
         {
             this._context = context;
@@ -43,6 +46,16 @@ namespace Ct.Interview.Repository
         {
             this._dbSet.Attach(entity);
             this._context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void AddRange(IEnumerable<T> entities)
+        {
+            _dbSet.AddRange(entities);
+        }
+
+        public void Truncate()
+        {
+            this._context.Database.ExecuteSqlCommand((string)$"TRUNCATE TABLE {typeof(T).Name}");
         }
     }
 }

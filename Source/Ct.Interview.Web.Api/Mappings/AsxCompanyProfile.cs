@@ -2,8 +2,11 @@
 using Ct.Interview.Data.Models;
 using Ct.Interview.Web.Api.ViewModels;
 
-namespace Ct.Interview.Web.Api.Mapping
+namespace Ct.Interview.Web.Api.Mappings
 {
+    /// <summary>  
+    /// Map entity object to ViewModel
+    /// </summary>  
     public class AsxCompanyProfile : Profile
     {
         public AsxCompanyProfile()

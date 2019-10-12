@@ -2,6 +2,7 @@
 using Ct.Interview.Data.Models;
 using Ct.Interview.Repository;
 using Ct.Interview.Repository.Interfaces;
+using Ct.Interview.Web.Api.HostedServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +27,16 @@ namespace Ct.Interview.Web.Api
             services.AddDbContext<CtInterviewDBContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString(name: "DefaultConnection")));
 
+            //services.AddScoped(serviceType: typeof(IUnitOfWork), implementationType: typeof(UnitOfWork));
+            //services.AddScoped(typeof(IRepository<>), implementationType: typeof(GenericRepository<>));
 
             services.AddScoped(serviceType: typeof(IUnitOfWork), implementationType: typeof(UnitOfWork));
             services.AddScoped(typeof(IRepository<>), implementationType: typeof(GenericRepository<>));
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddHostedService<ImportAsxFileHostedService>();
+            //services.AddSingleton<ImportAsxFileHostedService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

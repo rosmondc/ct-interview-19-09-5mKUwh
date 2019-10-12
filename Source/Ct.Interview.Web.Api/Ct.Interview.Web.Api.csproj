@@ -24,6 +24,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Ct.Interview.Repository\Ct.Interview.Repository.csproj" />
+    <ProjectReference Include="..\..\Ct.Iterview.Common\Ct.Interview.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Files\" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Ct.Interview.Data.Models
+namespace Ct.Interview.Web.Api.Models
 {
     public partial class CtInterviewDBContext : DbContext
     {
@@ -29,7 +31,7 @@ namespace Ct.Interview.Data.Models
 
             modelBuilder.Entity<AsxListedCompany>(entity =>
             {
-                entity.Property(e => e.AsxCode).HasMaxLength(3);
+                entity.Property(e => e.AsxCode).HasMaxLength(5);
 
                 entity.Property(e => e.CompanyName).HasMaxLength(250);
 
