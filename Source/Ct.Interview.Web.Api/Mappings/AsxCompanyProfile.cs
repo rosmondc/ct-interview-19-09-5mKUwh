@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ct.Interview.Common.ViewModels;
 using Ct.Interview.Data.Models;
 using Ct.Interview.Web.Api.ViewModels;
 
@@ -11,7 +12,8 @@ namespace Ct.Interview.Web.Api.Mappings
     {
         public AsxCompanyProfile()
         {
-            CreateMap<AsxListedCompany, AsxListedCompanyResponse>();
+            CreateMap<AsxListedCompany, AsxListedCompanyResponse>().ReverseMap();
+            CreateMap<AsxCompanyViewModel, AsxListedCompany>().ReverseMap();                        
         }
     }
 }

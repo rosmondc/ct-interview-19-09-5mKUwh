@@ -16,11 +16,16 @@ namespace Ct.Interview.Repository.Interfaces
         /// </summary>  
         /// <param name="id">The entity id.</param>  
         /// <returns></returns>  
-        Task<T> GetById(int Id);
+        Task<T> GetById(long Id);
+
+        /// <summary>  
+        /// Add new entity
+        /// </summary>  
+        /// <returns></returns>  
         void Add(T entity);
 
         // <summary>  
-        /// Adds the range.  
+        /// Add entities the range.  
         /// </summary>  
         /// <param name="entities">The entities.</param>  
         void AddRange(IEnumerable<T> entities);

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Ct.Interview.Web.Api
 {
@@ -27,21 +28,14 @@ namespace Ct.Interview.Web.Api
             services.AddDbContext<CtInterviewDBContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString(name: "DefaultConnection")));
 
-            //services.AddScoped(serviceType: typeof(IUnitOfWork), implementationType: typeof(UnitOfWork));
-            //services.AddScoped(typeof(IRepository<>), implementationType: typeof(GenericRepository<>));
-
             services.AddScoped(serviceType: typeof(IUnitOfWork), implementationType: typeof(UnitOfWork));
             services.AddScoped(typeof(IRepository<>), implementationType: typeof(GenericRepository<>));
 
             services.AddAutoMapper(typeof(Startup));
-
             services.AddHostedService<ImportAsxFileHostedService>();
-            //services.AddSingleton<ImportAsxFileHostedService>();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddSwaggerGen(options =>
-                options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Ct.Interview", Version = "v1" })
+                options.SwaggerDoc("v1", new Info { Title = "Ct.Interview", Version = "v1" })
             );
         }
 

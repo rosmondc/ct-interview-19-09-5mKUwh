@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Ct.Interview.Data.Models;
 using Ct.Interview.Repository.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Ct.Interview.Repository
 {
@@ -9,10 +10,11 @@ namespace Ct.Interview.Repository
         private readonly CtInterviewDBContext _context;
         public AsxCompanyRepository AsxCompanyRepository { get; private set; }
 
-        public UnitOfWork(CtInterviewDBContext context)
+
+        public UnitOfWork(CtInterviewDBContext context, ILogger<AsxCompanyRepository> logger)
         {
             this._context = context;
-            this.AsxCompanyRepository = new AsxCompanyRepository(this._context);
+            this.AsxCompanyRepository = new AsxCompanyRepository(this._context, logger);
         }
 
         public async Task Commit()

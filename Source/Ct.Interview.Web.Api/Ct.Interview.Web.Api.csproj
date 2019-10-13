@@ -13,18 +13,22 @@
 
   <ItemGroup>
     <Compile Remove="IAsxListedCompaniesService.cs" />
+    <Compile Remove="Mappings\AsxCompanyValues.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="NLog" Version="4.6.7" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Ct.Interview.Repository\Ct.Interview.Repository.csproj" />
     <ProjectReference Include="..\..\Ct.Iterview.Common\Ct.Interview.Common.csproj" />
+    <Content Update="nlog.config" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

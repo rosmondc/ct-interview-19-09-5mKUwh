@@ -1,6 +1,7 @@
 ﻿using Ct.Interview.Data.Models;
 using Ct.Interview.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,50 +13,103 @@ namespace Ct.Interview.Repository
     {
         private readonly CtInterviewDBContext _context;
         private readonly DbSet<T> _dbSet;
+        private readonly ILogger<AsxCompanyRepository> _logger;
 
         /// <summary>  
         /// Initializes a new instance of the <see cref="GenericRepository{TEntity}"/> class.                  
         /// </summary>  
-        public GenericRepository(CtInterviewDBContext context)
+        public GenericRepository(CtInterviewDBContext context, ILogger<AsxCompanyRepository> logger)
         {
             this._context = context;
             this._dbSet = this._context.Set<T>();
+            this._logger = logger;
         }
 
         public void Add(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbSet.Add(entity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Error {ex.Message} {ex.InnerException} Data: {entity}");
+            }
         }
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            return await this._dbSet.ToListAsync();
+            try
+            {
+                return await this._dbSet.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Error {ex.Message} {ex.InnerException}");
+                return null;
+            }
         }
 
-        public async Task<T> GetById(int id)
+        public async Task<T> GetById(long id)
         {
-            return await this._dbSet.FindAsync(id);
+            try
+            {
+                return await this._dbSet.FindAsync(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Error {ex.Message} {ex.InnerException} Search by Id: {id}");
+                return null;
+            }
         }
 
         public void Delete(T entity)
         {
-            this._dbSet.Remove(entity);
+            try
+            {
+                this._dbSet.Remove(entity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Error {ex.Message} {ex.InnerException} Data: {entity}");
+            }
         }
 
         public void Update(T entity)
         {
-            this._dbSet.Attach(entity);
-            this._context.Entry(entity).State = EntityState.Modified;
+            try
+            {
+                this._dbSet.Attach(entity);
+                this._context.Entry(entity).State = EntityState.Modified;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Error {ex.Message} {ex.InnerException} Data: {entity}");
+            }
         }
 
         public void AddRange(IEnumerable<T> entities)
         {
-            _dbSet.AddRange(entities);
+            try
+            {
+                _dbSet.AddRange(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Error {ex.Message} {ex.InnerException}");    
+            }
         }
 
         public void Truncate()
         {
-            this._context.Database.ExecuteSqlCommand((string)$"TRUNCATE TABLE {typeof(T).Name}");
+            try
+            {
+                this._context.Database.ExecuteSqlCommand((string)$"TRUNCATE TABLE {typeof(T).Name}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Error {ex.Message} {ex.InnerException}");
+            }
         }
     }
 }
