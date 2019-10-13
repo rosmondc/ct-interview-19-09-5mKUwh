@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ct.Interview.Data", "CtInte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ct.Interview.Repository", "Ct.Interview.Repository\Ct.Interview.Repository.csproj", "{26E12295-E3FA-4375-B8F8-93ADA3F43621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ct.Interview.Common", "Ct.Iterview.Common\Ct.Interview.Common.csproj", "{2603F6B9-4108-47F4-8ADA-37DFF96E8DD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ct.Interview.Common", "Ct.Iterview.Common\Ct.Interview.Common.csproj", "{2603F6B9-4108-47F4-8ADA-37DFF96E8DD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

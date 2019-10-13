@@ -17,11 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="NLog" Version="4.6.7" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ct.Iterview.Common\Ct.Interview.Common.csproj" />
     <ProjectReference Include="..\CtInterview.Data\Ct.Interview.Data.csproj" />
   </ItemGroup>
 

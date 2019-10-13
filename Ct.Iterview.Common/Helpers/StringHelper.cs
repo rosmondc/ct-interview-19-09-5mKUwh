@@ -19,5 +19,18 @@
                 return result;
             return 900000;
         }
+
+        /// <summary>
+        /// returns a 10 seconds by default
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double CacheExpirationToDouble(this string value)
+        {
+            double result;
+            if (double.TryParse(value, out result))
+                return result;
+            return 10;
+        }
     }
 }

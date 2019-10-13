@@ -24,7 +24,6 @@ namespace Ct.Interview.Web.Api.Controllers
 
         [HttpGet]
         [Route("/GetById")]
-        [ResponseCache(VaryByHeader = "GetById", Duration = 1000)]
         public async Task<ActionResult<AsxListedCompanyResponse>> GetById(long id)
         {
             _logger.LogInformation($"Execute endpoint id : {id}");
@@ -37,7 +36,6 @@ namespace Ct.Interview.Web.Api.Controllers
 
         [HttpGet]
         [Route("/GetByCode")]
-        [ResponseCache(VaryByHeader = "GetByCode", Duration = 1000)]
         public async Task<ActionResult<AsxListedCompanyResponse>> GetByCode(string asxCode)
         {
             _logger.LogInformation($"Execute endpoint code: {asxCode}");
@@ -51,7 +49,6 @@ namespace Ct.Interview.Web.Api.Controllers
 
         [HttpGet]
         [Route("/GetAll")]
-        [ResponseCache(VaryByHeader = "AsxList", Duration = 1000)]
         public async Task<ActionResult<AsxListedCompanyResponse[]>> GetAll()
         {
             _logger.LogInformation("Execute endpoint");

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Ct.Interview.Data.Models;
 using Ct.Interview.Repository.Interfaces;
+using Ct.Interview.Repository.Repos;
 using Microsoft.Extensions.Logging;
 
 namespace Ct.Interview.Repository

@@ -1,5 +1,4 @@
 ﻿using CsvHelper;
-using Ct.Interview.Common.Models;
 using System.IO;
 using System.Linq;
 
@@ -13,7 +12,6 @@ namespace Ct.Interview.Common.Helpers
         /// <param name="filePath"></param>
         /// <returns></returns>
         /// 
-        //public static AsxCompanyViewModel[] ParseCsv<T>(string filePath)
         public static T[] ParseCsv<T>(string filePath)
         {
             using (TextReader fileReader = File.OpenText(filePath))
@@ -23,7 +21,6 @@ namespace Ct.Interview.Common.Helpers
                 csv.Read();
                 csv.Read();
                 return csv.GetRecords<T>().ToArray();
-                // return csv.GetRecords<AsxCompanyViewModel>().ToArray();
             }
         }
     }

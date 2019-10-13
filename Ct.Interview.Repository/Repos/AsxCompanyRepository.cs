@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ct.Interview.Repository
+namespace Ct.Interview.Repository.Repos
 {
     public class AsxCompanyRepository : GenericRepository<AsxListedCompany>, IAsxCompanyRepository
     {

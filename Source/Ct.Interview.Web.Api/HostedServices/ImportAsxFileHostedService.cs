@@ -1,67 +1,26 @@
-﻿using Ct.Interview.Data.Models;
-using Ct.Interview.Repository;
-using Ct.Interview.Common.Helpers;
+﻿using Ct.Interview.Common.Helpers;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using Ct.Interview.Common.Models;
-using Ct.Interview.Common.ViewModels;
+using Ct.Interview.Repository.Interfaces;
+using Ct.Interview.Repository.Repos;
 
 namespace Ct.Interview.Web.Api.HostedServices
 {
     public class ImportAsxFileHostedService : BackgroundService, IHostedService
     {
-        public IServiceScopeFactory _serviceScopeFactory;
+        private readonly string _backgroundProcess;
         private readonly ILogger<AsxCompanyRepository> _logger;
-        private readonly IMapper _mapper;
-        static readonly HttpClient client = new HttpClient();
-        private readonly IConfiguration _configuration;
-        private readonly string _csvUrl;
-        private readonly string _csvFilePath;
-        private string _backgroundProcess;
+        private readonly ICsvHandler _csvHandler;
 
-        public ImportAsxFileHostedService(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory
-            , ILogger<AsxCompanyRepository> logger, IMapper mapper)
+        public ImportAsxFileHostedService(IConfiguration configuration, ILogger<AsxCompanyRepository> logger, ICsvHandler csvHandler)
         {
-            _configuration = configuration;
-            _csvUrl = _configuration.GetValue<string>("AsxSettings:ListedSecuritiesCsvUrl");
-            _csvFilePath = _configuration.GetValue<string>("FolderFiles:CsvPath");
-            _backgroundProcess = _configuration.GetValue<string>("BackgroundProcessScheduleInMilliseconds");
-            _serviceScopeFactory = serviceScopeFactory;
-            this._logger = logger;
-            this._mapper = mapper;
-        }
-
-        bool DownloadAsxCompanyFile()
-        {
-            this._logger.LogInformation("Downloading CSV file.");
-            var wc = new WebClient();
-            wc.DownloadFile(this._csvUrl, this._csvFilePath);
-
-            return true;
-        }
-
-        async Task ExportToSqlDatabase()
-        {
-            this._logger.LogInformation("Start exporting data to the database.");
-            var asxCompanies = this._mapper.Map<AsxListedCompany[]>(CsvParserHelper.ParseCsv<AsxCompanyViewModel>(this._csvFilePath));
-
-            using (var unitOfWork = new UnitOfWork(new CtInterviewDBContext(), this._logger))
-            {
-                //Truncate table first before reseeding
-                unitOfWork.AsxCompanyRepository.Truncate();
-
-                unitOfWork.AsxCompanyRepository.AddRange(asxCompanies);
-                await unitOfWork.Commit();
-                this._logger.LogInformation("Data succesfully updated.");
-            }
+                this._backgroundProcess = configuration.GetValue<string>("BackgroundProcessScheduleInMilliseconds");
+                this._logger = logger;
+                this._csvHandler = csvHandler;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -70,10 +29,9 @@ namespace Ct.Interview.Web.Api.HostedServices
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-
-                    if (DownloadAsxCompanyFile())
+                    if (this._csvHandler.DownloadAsxCompanyFile())
                     {
-                        await ExportToSqlDatabase();
+                        await this._csvHandler.ExportToSqlDatabase();
                     }
 
                     await Task.Delay(this._backgroundProcess.TimerScheduleConvertToInt(), stoppingToken);

@@ -1,10 +1,10 @@
 ﻿using Ct.Interview.Data.Models;
 using Ct.Interview.Repository.Interfaces;
+using Ct.Interview.Repository.Repos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ct.Interview.Repository
