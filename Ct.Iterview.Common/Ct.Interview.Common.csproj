@@ -5,10 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers\MemoryCacheWithPolicyHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="CsvHelper" Version="12.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.Runtime.Caching" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>

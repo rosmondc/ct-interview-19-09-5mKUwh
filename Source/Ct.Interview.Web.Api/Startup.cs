@@ -7,14 +7,11 @@ using Ct.Interview.Repository.Interfaces;
 using Ct.Interview.Web.Api.HostedServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Net.Http.Headers;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
 
 namespace Ct.Interview.Web.Api
 {
@@ -41,12 +38,23 @@ namespace Ct.Interview.Web.Api
             services.AddHostedService<ImportAsxFileHostedService>();
 
             services.AddResponseCaching();
+            services.AddMemoryCache();
 
-            services.AddMvc(options => 
-            options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())
-                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options => {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                options.CacheProfiles.Add("DefaultCacheExpirationInSeconds",
+                    new CacheProfile()
+                    {
+                        Duration = Configuration.GetSection("DefaultCacheExpirationInSeconds").Value.DefaultCacheExpirationToInt()
+                    });
+                options.CacheProfiles.Add("MinimumCacheExpirationInSeconds",
+                    new CacheProfile()
+                    {
+                        Duration = Configuration.GetSection("MinimumCacheExpirationInSeconds").Value.MinimumCacheExpirationToInt()
+                    });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            
+
             services.AddSwaggerGen(options =>
                 options.SwaggerDoc("v1", new Info { Title = "Ct.Interview", Version = "v1" })
             );
@@ -66,24 +74,6 @@ namespace Ct.Interview.Web.Api
             {
                 app.UseHsts();
             }
-
-            app.UseResponseCaching();            
-            app.Use(async (context, next) =>
-            {
-                context.Response.GetTypedHeaders().CacheControl =
-                    new CacheControlHeaderValue()
-                    {
-                        Public = true,
-                        MaxAge = TimeSpan.FromSeconds(
-                            Configuration.GetSection("CacheExpirationInSeconds")
-                            .Value.CacheExpirationToDouble())
-                    };
-                context.Response.Headers[HeaderNames.Vary] =
-                    new string[] { "Accept-Encoding" };
-
-                await next();
-            });
-
             app.UseHttpsRedirection();
             app.UseMvc();
             

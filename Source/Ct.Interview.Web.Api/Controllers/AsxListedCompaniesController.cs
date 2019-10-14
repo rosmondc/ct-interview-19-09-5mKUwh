@@ -21,6 +21,7 @@ namespace Ct.Interview.Web.Api.Controllers
 
         [HttpGet]
         [Route("/GetById")]
+        [ResponseCache(CacheProfileName = "MinimumCacheExpirationInSeconds")]
         public async Task<ActionResult<AsxListedCompanyResponse>> GetById(long id)
         {
             var result = await this._uow.AsxCompanyRepository.GetById(id);
@@ -32,6 +33,7 @@ namespace Ct.Interview.Web.Api.Controllers
 
         [HttpGet]
         [Route("/GetByCode")]
+        [ResponseCache(CacheProfileName = "MinimumCacheExpirationInSeconds")]
         public async Task<ActionResult<AsxListedCompanyResponse>> GetByCode(string asxCode)
         {
             var result = await this._uow.AsxCompanyRepository.GetByCode(asxCode);
@@ -43,6 +45,7 @@ namespace Ct.Interview.Web.Api.Controllers
 
         [HttpGet]
         [Route("/GetAll")]
+        [ResponseCache(CacheProfileName = "DefaultCacheExpirationInSeconds")]
         public async Task<ActionResult<AsxListedCompanyResponse[]>> GetAll()
         {
             var results = await this._uow.AsxCompanyRepository.GetAll();

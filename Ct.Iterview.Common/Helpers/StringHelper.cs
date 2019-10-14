@@ -8,16 +8,29 @@
         }
 
         /// <summary>
-        /// returns a 900000 milliseconds which is equivalent to 15 minutes
+        /// returns a 86400  which is equivalent to 24 hours
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static int TimerScheduleConvertToInt(this string value)
+        public static int DefaultCacheExpirationToInt(this string value)
         {
             int result;
             if (int.TryParse(value, out result))
                 return result;
-            return 900000;
+            return 86400;            
+        }
+
+        /// <summary>
+        /// returns a 2 seconds
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static int MinimumCacheExpirationToInt(this string value)
+        {
+            int result;
+            if (int.TryParse(value, out result))
+                return result;
+            return 2;
         }
 
         /// <summary>
@@ -31,6 +44,19 @@
             if (double.TryParse(value, out result))
                 return result;
             return 10;
+        }
+
+        /// <summary>
+        /// returns a 300 seconds/5 minutes by default
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double RetryDownloadCsvToDouble(this string value)
+        {
+            double result;
+            if (double.TryParse(value, out result))
+                return result;
+            return 300;
         }
     }
 }

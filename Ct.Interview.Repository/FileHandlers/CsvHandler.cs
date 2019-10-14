@@ -38,7 +38,7 @@ namespace Ct.Interview.Repository.FileHandlers
         }
 
         public async Task ExportToSqlDatabase(string csvFilePath)
-        {
+        {            
             this._logger.LogInformation("Start exporting data to the database.");
             var asxCompanies = this._mapper.Map<AsxListedCompany[]>(CsvParserHelper.ParseCsv<AsxCompanyViewModel>(csvFilePath));
             using (var unitOfWork = new UnitOfWork(new CtInterviewDBContext(), this._logger))
