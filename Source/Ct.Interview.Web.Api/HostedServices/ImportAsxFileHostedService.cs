@@ -43,8 +43,8 @@ namespace Ct.Interview.Web.Api.HostedServices
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    bool greeting;
-                    if (!_memoryCache.TryGetValue(CacheKeys.IsDataFoundOnCsvUrl, out greeting))
+                    bool cacheValue;
+                    if (!_memoryCache.TryGetValue(CacheKeys.IsDataFoundOnCsvUrl, out cacheValue))
                     {
                         var isValidUrl = await ValidateCsvUrl();
 
