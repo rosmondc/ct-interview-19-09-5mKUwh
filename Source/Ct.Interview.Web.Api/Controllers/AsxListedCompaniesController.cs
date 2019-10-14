@@ -4,7 +4,6 @@ using Ct.Interview.Repository;
 using Ct.Interview.Repository.Interfaces;
 using Ct.Interview.Web.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Ct.Interview.Web.Api.Controllers
 {
@@ -13,20 +12,17 @@ namespace Ct.Interview.Web.Api.Controllers
     public class AsxListedCompaniesController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly ILogger<AsxListedCompaniesController> _logger;
         private readonly UnitOfWork _uow;
-        public AsxListedCompaniesController(IUnitOfWork uow, IMapper mapper, ILogger<AsxListedCompaniesController> logger)
+        public AsxListedCompaniesController(IUnitOfWork uow, IMapper mapper)
         {
             this._uow = uow as UnitOfWork;
-            this._mapper = mapper;
-            _logger = logger;
+            this._mapper = mapper;            
         }
 
         [HttpGet]
         [Route("/GetById")]
         public async Task<ActionResult<AsxListedCompanyResponse>> GetById(long id)
         {
-            _logger.LogInformation($"Execute endpoint id : {id}");
             var result = await this._uow.AsxCompanyRepository.GetById(id);
             if (result != null)
                 return _mapper.Map<AsxListedCompanyResponse>(result);
@@ -38,8 +34,6 @@ namespace Ct.Interview.Web.Api.Controllers
         [Route("/GetByCode")]
         public async Task<ActionResult<AsxListedCompanyResponse>> GetByCode(string asxCode)
         {
-            _logger.LogInformation($"Execute endpoint code: {asxCode}");
-
             var result = await this._uow.AsxCompanyRepository.GetByCode(asxCode);
             if (result != null)
                 return _mapper.Map<AsxListedCompanyResponse>(result);
@@ -51,7 +45,6 @@ namespace Ct.Interview.Web.Api.Controllers
         [Route("/GetAll")]
         public async Task<ActionResult<AsxListedCompanyResponse[]>> GetAll()
         {
-            _logger.LogInformation("Execute endpoint");
             var results = await this._uow.AsxCompanyRepository.GetAll();
             if (results != null)
                 return _mapper.Map<AsxListedCompanyResponse[]>(results);

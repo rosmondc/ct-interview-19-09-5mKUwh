@@ -9,6 +9,7 @@ namespace Ct.Interview.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly CtInterviewDBContext _context;
+        
         public AsxCompanyRepository AsxCompanyRepository { get; private set; }
 
 

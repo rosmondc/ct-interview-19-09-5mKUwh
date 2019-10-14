@@ -20,8 +20,12 @@ namespace Ct.Interview.Repository.Repos
 
         public async Task<AsxListedCompany> GetByCode(string code)
         {
+            if (code.Length == 0)
+                return null;
+
             try
             {
+                _logger.LogInformation($"Start searching by code: {code}");
                 return await this._context.AsxListedCompany.Where(x => x.AsxCode == code).FirstAsync();
             }
             catch (Exception ex)

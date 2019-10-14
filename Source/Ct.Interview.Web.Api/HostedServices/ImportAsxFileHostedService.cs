@@ -15,10 +15,14 @@ namespace Ct.Interview.Web.Api.HostedServices
         private readonly string _backgroundProcess;
         private readonly ILogger<AsxCompanyRepository> _logger;
         private readonly ICsvHandler _csvHandler;
+        private readonly string _csvUrl;
+        private readonly string _csvFilePath;
 
         public ImportAsxFileHostedService(IConfiguration configuration, ILogger<AsxCompanyRepository> logger, ICsvHandler csvHandler)
         {
                 this._backgroundProcess = configuration.GetValue<string>("BackgroundProcessScheduleInMilliseconds");
+                this._csvUrl = configuration.GetValue<string>("AsxSettings:ListedSecuritiesCsvUrl");
+                this._csvFilePath = configuration.GetValue<string>("FolderFiles:CsvPath");
                 this._logger = logger;
                 this._csvHandler = csvHandler;
         }
@@ -29,9 +33,9 @@ namespace Ct.Interview.Web.Api.HostedServices
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    if (this._csvHandler.DownloadAsxCompanyFile())
+                    if (this._csvHandler.DownloadAsxCompanyFile(this._csvUrl, this._csvFilePath))
                     {
-                        await this._csvHandler.ExportToSqlDatabase();
+                        await this._csvHandler.ExportToSqlDatabase(this._csvFilePath);
                     }
 
                     await Task.Delay(this._backgroundProcess.TimerScheduleConvertToInt(), stoppingToken);
