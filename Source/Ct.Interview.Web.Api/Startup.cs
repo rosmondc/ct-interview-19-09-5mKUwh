@@ -69,6 +69,11 @@ namespace Ct.Interview.Web.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetRequiredService<CtInterviewDBContext>();
+                    context.Database.EnsureCreated();
+                }
             }
             else
             {
